@@ -17,27 +17,36 @@
 #include <unistd.h>
 #include <termios.h>
 #include "ft_select.h"
-#include "../libft/includes/libft.h"
 
-void ft_error(char *msg)
+void	ft_error(char *msg)
 {
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
 	exit(-1);
 }
 
+void	eb_wait_for_it(t_data *d, struct termios *term)
+{
+	while (ft_strcmp(d->read_char, "exit") != 0)
+	{
+		ft_putstr("t1\n");
+		eb_print(d);
+		ft_putstr("t2\n");
+	}
+}
+
 int		main(int ac, char const *av[])
 {
-	char			*name;
-	char			bp[1024];
-	char			t[4096];
-	char			*area;
-	char			*ab;
-	char			*af;
-	struct termios	term;
+	t_data					d;
+	/*static struct termios	old;*/
+	struct termios			term;
 
-	name = getenv("TERM");
-	if (tgetent(bp, name) < 1)
+	if (ac < 2)
+		ft_error("usage: ft_select choix1 etc.");
+	ft_putstr("t00\n");
+	d.list = get_lst((char **)++av);
+	ft_putstr("t01\n");
+	if (tgetent(d.bp, getenv("TERM")) < 1)
 		ft_error("bad tgetent");
 	if (tcgetattr(0, &term) != 0)
 		ft_error("bad tcgetattr");
@@ -45,16 +54,10 @@ int		main(int ac, char const *av[])
 	term.c_lflag &= ICANON;
 	if (tcsetattr(0, 0, &term) != 0)
 		ft_error("bad tcsetattr");
-	/*while ()
-	{
+	tputs(tgetstr("vi", NULL), 1, eb_putchar);
+	eb_wait_for_it(&d, &term);
 
-	}*/
-
-	area = t;
-	af = tgetstr("AF", &area);
-	ab = tgetstr("AB", &area);
-	printf("-%s\n-%s\n-%s\n", bp, af, ab);
-	
+	tputs(tgetstr("ve", NULL), 1, eb_putchar);
 	(void)ac;
 	(void)av;
 	return (0);

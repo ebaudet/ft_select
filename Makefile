@@ -25,6 +25,9 @@ DIR_OBJ	= .obj
 # Files
 NAME	= ft_select
 F_SRC	+= main.c
+F_SRC	+= eb_list.c
+F_SRC	+= eb_tools.c
+F_SRC	+= eb_print.c
 SRC		= $(addprefix $(DIR_SRC)/, $(F_SRC))
 OBJ		= $(addprefix $(DIR_OBJ)/, $(subst .c,.o,$(SRC)))
 F_INC	+= ft_select.h
@@ -87,5 +90,5 @@ re: fclean all
 
 # Additional Rules:
 gdb:
-	cc -g $(FLAGS) $(SRC) -o $(NAME)
+	cc -g $(FLAGS) $(SRC) -o $(NAME) $(LDFLAGS) $(LIB_FT) $(LIB_TERMCAT)
 	gdb $(NAME)
