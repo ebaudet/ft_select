@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <curses.h>
+#include <term.h>
 #include "ft_select.h"
 
 void	eb_print(t_data *d)
@@ -21,7 +23,13 @@ void	eb_print(t_data *d)
 	tmp = *(d->list);
 	while (tmp != *(d->list) || cpt++ == 0)
 	{
-		ft_putendl(tmp->str);
+		if (d->cursor == tmp)
+                tputs(tgetstr("us", NULL), 1, eb_putchar);
+        if (tmp->select)
+                tputs(tgetstr("mr", NULL), 1, eb_putchar);
+        ft_putstr(tmp->str);
+        tputs(tgetstr("me", NULL), 1, eb_putchar);
+		/*ft_putendl(tmp->str);*/
 		tmp = tmp->next;
 	}
 }

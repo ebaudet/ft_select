@@ -27,12 +27,13 @@ void	ft_error(char *msg)
 
 void	eb_wait_for_it(t_data *d, struct termios *term)
 {
-	while (ft_strcmp(d->read_char, "exit") != 0)
+	while (!is_enter(d->read_char))
 	{
-		ft_putstr("t1\n");
+		read(0, d->read_char, 5);
 		eb_print(d);
-		ft_putstr("t2\n");
+		printf("[%d %d %d %d %d]\n", d->read_char[0], d->read_char[1], d->read_char[2], d->read_char[3], d->read_char[4]);
 	}
+	(void)term;
 }
 
 int		main(int ac, char const *av[])
@@ -43,9 +44,8 @@ int		main(int ac, char const *av[])
 
 	if (ac < 2)
 		ft_error("usage: ft_select choix1 etc.");
-	ft_putstr("t00\n");
 	d.list = get_lst((char **)++av);
-	ft_putstr("t01\n");
+	d.cursor = *(d.list);
 	if (tgetent(d.bp, getenv("TERM")) < 1)
 		ft_error("bad tgetent");
 	if (tcgetattr(0, &term) != 0)

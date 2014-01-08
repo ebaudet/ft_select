@@ -26,8 +26,9 @@ typedef struct	s_lst
 typedef struct	s_data
 {
 	char			bp[1024];
-	char			read_char[4];
+	char			read_char[5];
 	t_lst			**list;
+	t_lst			*cursor;
 }				t_data;
 
 /*
@@ -48,6 +49,20 @@ int		eb_putchar(int c);
 ** eb_print.c
 */
 void	eb_print(t_data *d);
+
+/*
+** eb_is_key.c
+*/
+int		is_up(char *buf);
+int		is_down(char *buf);
+int		is_left(char *buf);
+int		is_right(char *buf);
+int		is_space(char *buf);
+int		is_enter(char *buf);
+int		is_del(char *buf);
+int		is_delete(char *buf);
+int		is_quit(char *buf);
+int		is_background(char *buf);
 
 /*
 ** eb_test.c

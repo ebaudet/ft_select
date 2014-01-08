@@ -89,7 +89,6 @@ t_lst	**get_lst(char **av)
 	av++;
 	while (*av != '\0')
 	{
-		ft_putstr("t02\n");
 		tmp = eb_new_elt(*av);
 		eb_add_list_last(list, tmp);
 		av++;
