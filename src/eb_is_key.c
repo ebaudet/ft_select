@@ -39,7 +39,7 @@ int		is_space(char *buf)
 
 int		is_enter(char *buf)
 {
-	return (buf[0] == 10);
+	return (buf[0] == 10 && buf[1] == 0 && buf[2] == 0 && buf[3] == 0);
 }
 
 int		is_del(char *buf)
@@ -60,4 +60,19 @@ int		is_quit(char *buf)
 int		is_background(char *buf)
 {
 	return (buf[0] == 26);
+}
+
+int		is_esc(char *buf)
+{
+	return (buf[0] == 27 && buf[1] == 0 && buf[2] == 0 && buf[3] == 0);
+}
+
+int		is_ctrc(char *buf)
+{
+	return (buf[0] == 3 && buf[1] == 0 && buf[2] == 0 && buf[3] == 0);
+}
+
+int		is_ctrz(char *buf)
+{
+	return (buf[0] == 26 && buf[1] == 0 && buf[2] == 0 && buf[3] == 0);
 }

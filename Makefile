@@ -29,6 +29,7 @@ F_SRC	+= eb_list.c
 F_SRC	+= eb_tools.c
 F_SRC	+= eb_print.c
 F_SRC	+= eb_is_key.c
+F_SRC	+= eb_signal.c
 SRC		= $(addprefix $(DIR_SRC)/, $(F_SRC))
 OBJ		= $(addprefix $(DIR_OBJ)/, $(subst .c,.o,$(SRC)))
 F_INC	+= ft_select.h

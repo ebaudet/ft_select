@@ -37,7 +37,7 @@ typedef struct	s_data
 t_lst	*eb_new_elt(char *str);
 void	eb_add_list_last(t_lst **list, t_lst *new);
 void	eb_add_list_first(t_lst **list, t_lst *new);
-int		eb_del_elt(t_lst *elt);
+int		eb_del_elt(t_lst **list, t_lst *elt);
 t_lst	**get_lst(char **av);
 
 /*
@@ -49,6 +49,7 @@ int		eb_putchar(int c);
 ** eb_print.c
 */
 void	eb_print(t_data *d);
+void	eb_print_checked(t_data *d);
 
 /*
 ** eb_is_key.c
@@ -63,6 +64,15 @@ int		is_del(char *buf);
 int		is_delete(char *buf);
 int		is_quit(char *buf);
 int		is_background(char *buf);
+int		is_esc(char *buf);
+int		is_ctrc(char *buf);
+int		is_ctrz(char *buf);
+
+/*
+** eb_signal.c
+*/
+void	eb_print_sig(int s);
+void	eb_getsig(void);
 
 /*
 ** eb_test.c

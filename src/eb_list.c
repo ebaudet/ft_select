@@ -6,7 +6,7 @@
 /*   By: ebaudet <ebaudet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/08 17:20:27 by ebaudet           #+#    #+#             */
-/*   Updated: 2014/01/08 17:20:27 by ebaudet          ###   ########.fr       */
+/*   Updated: 2014/01/09 18:50:23 by ebaudet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,21 @@ void	eb_add_list_first(t_lst **list, t_lst *new)
 	*list = new;
 }
 
-int		eb_del_elt(t_lst *elt)
+int		eb_del_elt(t_lst **list, t_lst *elt)
 {
+	if (*list == NULL)
+		return (0);
 	if (elt->next == elt)
 	{
+		if (*list == elt)
+			*list = NULL;
 		free(elt);
 		return (0);
 	}
 	else
 	{
+		if (*list == elt)
+			*list = elt->next;
 		elt->prev->next = elt->next;
 		elt->next->prev = elt->prev;
 		free(elt);
