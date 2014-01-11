@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include <signal.h>
+#include <curses.h>
+#include <term.h>
 #include "ft_select.h"
 
 void	eb_print_sig(int s)
@@ -73,7 +75,10 @@ void	eb_print_sig(int s)
 	if (s == SIGPROF)
 		ft_putendl("SIGPROF");
 	if (s == SIGWINCH)
-		ft_putendl("SIGWINCH");
+	{
+		tputs(tgetstr("cl", NULL), 1, eb_putchar);
+		/*TODO : signal width*/
+	}
 	if (s == SIGINFO)
 		ft_putendl("SIGINFO");
 	if (s == SIGUSR1)

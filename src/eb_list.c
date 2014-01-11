@@ -62,7 +62,7 @@ void	eb_add_list_first(t_lst **list, t_lst *new)
 	*list = new;
 }
 
-int		eb_del_elt(t_lst **list, t_lst *elt)
+int		eb_del_elt(t_lst **list, t_lst *elt, t_data *d)
 {
 	if (*list == NULL)
 		return (0);
@@ -71,6 +71,7 @@ int		eb_del_elt(t_lst **list, t_lst *elt)
 		if (*list == elt)
 			*list = NULL;
 		free(elt);
+		d->nb_elt--;
 		return (0);
 	}
 	else
@@ -80,23 +81,29 @@ int		eb_del_elt(t_lst **list, t_lst *elt)
 		elt->prev->next = elt->next;
 		elt->next->prev = elt->prev;
 		free(elt);
+		d->nb_elt--;
 		return (1);
 	}
 }
 
-t_lst	**get_lst(char **av)
+t_lst	**get_lst(char **av, t_data *d)
 {
 	t_lst			**list;
 	t_lst			*tmp;
+	int				len;
 
 	list = (t_lst **)malloc(sizeof(t_lst *));
+	d->len = (int)ft_strlen(*av);
 	tmp = eb_new_elt(*av);
+	d->nb_elt = 1;
 	*list = tmp;
 	av++;
 	while (*av != '\0')
 	{
+		d->len = (d->len < (len = (int)ft_strlen(*av))) ? len : d->len;
 		tmp = eb_new_elt(*av);
 		eb_add_list_last(list, tmp);
+		d->nb_elt++;
 		av++;
 	}
 	return (list);

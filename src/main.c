@@ -6,7 +6,7 @@
 /*   By: ebaudet <ebaudet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/02 21:38:44 by ebaudet           #+#    #+#             */
-/*   Updated: 2014/01/05 21:31:47 by ebaudet          ###   ########.fr       */
+/*   Updated: 2014/01/10 21:37:28 by ebaudet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,18 @@
 #include <termios.h>
 #include "ft_select.h"
 
-void	ft_error(char *msg)
-{
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	exit(-1);
-}
-
-
-
 int		eb_supprime_element(t_data *d)
 {
 	if (d->cursor->next == *(d->list))
 	{
 		d->cursor = (d->cursor)->prev;
-		if (eb_del_elt(d->list, (d->cursor)->next) == 0)
+		if (eb_del_elt(d->list, (d->cursor)->next, d) == 0)
 			return (-1);
 	}
 	else
 	{
 		d->cursor = (d->cursor)->next;
-		if (eb_del_elt(d->list, (d->cursor)->prev) == 0)
+		if (eb_del_elt(d->list, (d->cursor)->prev, d) == 0)
 			return (-1);
 	}
 	return (0);
@@ -66,7 +57,8 @@ int		eb_wait_for_it(t_data *d)
 		}
 		tputs(tgetstr("cl", NULL), 1, eb_putchar);
 		eb_print(d);
-		printf("[%d %d %d %d %d]\n", d->read_char[0], d->read_char[1], d->read_char[2], d->read_char[3], d->read_char[4]);
+		/*printf("[%d %d %d %d %d]\n", d->read_char[0], d->read_char[1],
+				d->read_char[2], d->read_char[3], d->read_char[4]);*/
 		ft_bzero(d->read_char, 5);
 		read(0, d->read_char, 5);
 	}
@@ -83,7 +75,7 @@ int		main(int ac, char const *av[])
 
 	if (ac < 2)
 		ft_error("usage: ft_select choix1 etc.");
-	d.list = get_lst((char **)++av);
+	d.list = get_lst((char **)++av, &d);
 	d.cursor = *(d.list);
 	if (tgetent(d.bp, getenv("TERM")) < 1)
 		ft_error("bad tgetent");
@@ -93,8 +85,11 @@ int		main(int ac, char const *av[])
 	term.c_lflag &= ICANON;
 	if (tcsetattr(0, 0, &term) != 0)
 		ft_error("bad tcsetattr");
+	d.row = tgetnum("li");
+	d.col = tgetnum("co");
 	tputs(tgetstr("vi", NULL), 1, eb_putchar);
-	eb_getsig();
+	tputs(tgetstr("cl", NULL), 1, eb_putchar);
+	/*eb_getsig();*/
 	if (eb_wait_for_it(&d) == 1)
 		eb_print_checked(&d);
 	tputs(tgetstr("ve", NULL), 1, eb_putchar);

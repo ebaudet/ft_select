@@ -13,23 +13,33 @@
 #ifndef FT_SELECT_H
 # define FT_SELECT_H
 
-#include "../libft/includes/libft.h"
+# include "../libft/includes/libft.h"
 
-typedef struct	s_lst
+typedef struct		s_lst
 {
 	char			*str;
 	int				select;
 	struct s_lst	*next;
 	struct s_lst	*prev;
-}				t_lst;
+}					t_lst;
 
-typedef struct	s_data
+typedef struct		s_data
 {
 	char			bp[1024];
 	char			read_char[5];
 	t_lst			**list;
 	t_lst			*cursor;
-}				t_data;
+	int				row;
+	int				col;
+	int				len;
+	int				nb_elt;
+	int				nb_col;
+	int				pos_x;
+	int				pos_y;
+	int				merge;
+	int				center;
+	int				i;
+}					t_data;
 
 /*
 ** eb_list.c
@@ -37,8 +47,8 @@ typedef struct	s_data
 t_lst	*eb_new_elt(char *str);
 void	eb_add_list_last(t_lst **list, t_lst *new);
 void	eb_add_list_first(t_lst **list, t_lst *new);
-int		eb_del_elt(t_lst **list, t_lst *elt);
-t_lst	**get_lst(char **av);
+int		eb_del_elt(t_lst **list, t_lst *elt, t_data *d);
+t_lst	**get_lst(char **av, t_data *d);
 
 /*
 ** eb_tools.c
@@ -49,7 +59,9 @@ int		eb_putchar(int c);
 ** eb_print.c
 */
 void	eb_print(t_data *d);
+int		eb_position(t_data *d, t_lst *tmp);
 void	eb_print_checked(t_data *d);
+void	ft_error(char *msg);
 
 /*
 ** eb_is_key.c
