@@ -30,6 +30,8 @@ F_SRC	+= eb_tools.c
 F_SRC	+= eb_print.c
 F_SRC	+= eb_is_key.c
 F_SRC	+= eb_signal.c
+F_SRC	+= eb_term.c
+F_SRC	+= eb_is_key_arrow.c
 SRC		= $(addprefix $(DIR_SRC)/, $(F_SRC))
 OBJ		= $(addprefix $(DIR_OBJ)/, $(subst .c,.o,$(SRC)))
 F_INC	+= ft_select.h
@@ -42,11 +44,13 @@ $(NAME): $(OBJ)
 	@echo "\033[31mCompilation de la libft...\033[0m"
 	@make -C libft
 	@$(CC) -o $@ $^ $(CFLAGS) $(LIB_FT) $(LIB_TERMCAT)
-	@echo "\033[33m$(CC) -o \033[4m$@\033[0m\033[33m $^ $(CFLAGS) $(LIB_FT) $(LIB_TERMCAT)\033[0m"
+	@echo "\033[33m$(CC) -o \033[4m$@\033[0m\033[33m $^ $(CFLAGS) $(LIB_FT) \
+	$(LIB_TERMCAT)\033[0m"
 
 $(addprefix $(DIR_OBJ)/, %.o): %.c $(INC)
 	@$(CC) -o $@ -c $< $(CFLAGS) $(LDFLAGS)
-	@echo "\033[34m$(CC) -o \033[4m$@\033[0m\033[34m -c $< $(CFLAGS) $(LDFLAGS)\033[0m"
+	@echo "\033[34m$(CC) -o \033[4m$@\033[0m\033[34m -c $< $(CFLAGS) \
+	$(LDFLAGS)\033[0m"
 
 $(DIR_OBJ):
 	@echo "create  folder $(DIR_OBJ)/$(DIR_SRC)"

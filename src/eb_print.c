@@ -29,15 +29,14 @@ void	eb_print(t_data *d)
 		++d->i;
 		if (eb_position(d, tmp) == -1)
 		{
-			ft_putstr("Redimensionner la fenetre.\n");
+			eb_putstr_term("Redimensionner la fenetre.\n");
 			return ;
 		}
 		if (d->cursor == tmp)
 			tputs(tgetstr("us", NULL), 1, eb_putchar);
 		if (tmp->select)
 			tputs(tgetstr("mr", NULL), 1, eb_putchar);
-		
-		ft_putstr(tmp->str);
+		eb_putstr_term(tmp->str);
 		tputs(tgetstr("me", NULL), 1, eb_putchar);
 		tmp = tmp->next;
 	}
@@ -70,7 +69,7 @@ void	eb_print_checked(t_data *d)
 	cpt = 0;
 	i = 0;
 	tmp = *(d->list);
-	tputs(tgetstr("cl", NULL), 1, eb_putchar);
+	eb_clear_screen(d);
 	while (tmp != *(d->list) || cpt++ == 0)
 	{
 		if (tmp->select == 1)
@@ -86,7 +85,12 @@ void	eb_print_checked(t_data *d)
 
 void	ft_error(char *msg)
 {
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
+	write(isatty(FD_STD_ERR), msg, ft_strlen(msg));
+	write(isatty(FD_STD_ERR), "\n", 1);
 	exit(-1);
+}
+
+void	eb_putstr_term(char *str)
+{
+	ft_putstr_fd(str, isatty(FD_STD_OUT));
 }

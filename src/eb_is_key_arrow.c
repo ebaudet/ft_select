@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eb_is_key.c                                        :+:      :+:    :+:   */
+/*   eb_is_key_arrow.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebaudet <ebaudet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/01/08 23:18:28 by ebaudet           #+#    #+#             */
-/*   Updated: 2014/01/08 23:18:28 by ebaudet          ###   ########.fr       */
+/*   Created: 2014/01/12 22:45:39 by ebaudet           #+#    #+#             */
+/*   Updated: 2014/01/12 22:45:39 by ebaudet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int		is_space(char *buf)
+int		is_arrow(char *buf)
 {
-	return (buf[0] == 32);
+	if (buf[0] == 27 && buf[1] == 91)
+	{
+		if (buf[2] == 65)
+			return (UP);
+		else if (buf[2] == 66)
+			return (DOWN);
+		else if (buf[2] == 68)
+			return (LEFT);
+		else if (buf[2] == 67)
+			return (RIGHT);
+	}
+	return (NOT_ARROW);
 }
-
-int		is_enter(char *buf)
-{
-	return (buf[0] == 10 && buf[1] == 0 && buf[2] == 0 && buf[3] == 0);
-}
-
-int		is_del(char *buf)
-{
-	return (buf[0] == 127);
-}
-
-int		is_delete(char *buf)
-{
-	return (buf[0] == 27 && buf[1] == 91 && buf[2] == 51 && buf[3] == 126);
-}
-
-int		is_esc(char *buf)
-{
-	return (buf[0] == 27 && buf[1] == 0 && buf[2] == 0 && buf[3] == 0);
-}
-

@@ -15,6 +15,15 @@
 
 # include "../libft/includes/libft.h"
 
+# define FD_STD_OUT 1
+# define FD_STD_ERR 2
+
+# define NOT_ARROW 0
+# define UP 1
+# define DOWN 2
+# define LEFT 3
+# define RIGHT 4
+
 typedef struct		s_lst
 {
 	char			*str;
@@ -44,52 +53,58 @@ typedef struct		s_data
 /*
 ** eb_list.c
 */
-t_lst	*eb_new_elt(char *str);
-void	eb_add_list_last(t_lst **list, t_lst *new);
-void	eb_add_list_first(t_lst **list, t_lst *new);
-int		eb_del_elt(t_lst **list, t_lst *elt, t_data *d);
-t_lst	**get_lst(char **av, t_data *d);
+t_lst			*eb_new_elt(char *str);
+void			eb_add_list_last(t_lst **list, t_lst *new);
+void			eb_add_list_first(t_lst **list, t_lst *new);
+int				eb_del_elt(t_lst **list, t_lst *elt, t_data *d);
+t_lst			**get_lst(char **av, t_data *d);
 
 /*
 ** eb_tools.c
 */
-int		eb_putchar(int c);
+int				eb_putchar(int c);
+int				eb_putchar_output(int c);
+void			eb_clear_screen(t_data *d);
+void			*eb_get_data(void);
+void			eb_get_winsize(t_data *d);
 
 /*
 ** eb_print.c
 */
-void	eb_print(t_data *d);
-int		eb_position(t_data *d, t_lst *tmp);
-void	eb_print_checked(t_data *d);
-void	ft_error(char *msg);
+void			eb_print(t_data *d);
+int				eb_position(t_data *d, t_lst *tmp);
+void			eb_print_checked(t_data *d);
+void			ft_error(char *msg);
+void			eb_putstr_term(char *str);
 
 /*
 ** eb_is_key.c
 */
-int		is_up(char *buf);
-int		is_down(char *buf);
-int		is_left(char *buf);
-int		is_right(char *buf);
-int		is_space(char *buf);
-int		is_enter(char *buf);
-int		is_del(char *buf);
-int		is_delete(char *buf);
-int		is_quit(char *buf);
-int		is_background(char *buf);
-int		is_esc(char *buf);
-int		is_ctrc(char *buf);
-int		is_ctrz(char *buf);
+int				is_space(char *buf);
+int				is_enter(char *buf);
+int				is_del(char *buf);
+int				is_delete(char *buf);
+int				is_esc(char *buf);
+
+/*
+** eb_is_key_arrow.c
+*/
+int				is_arrow(char *buf);
 
 /*
 ** eb_signal.c
 */
-void	eb_print_sig(int s);
-void	eb_getsig(void);
+void			eb_sig_resize(void);
+void			eb_sig_clear(void);
+void			eb_sig_fg(void);
+void			eb_sig_action(int s);
+void			eb_getsig(void);
 
 /*
-** eb_test.c
+** eb_term.c
 */
-void	print_list(t_lst **list);
-void	eb_test();
+struct termios	*eb_get_init_conf(void);
+void			eb_init(void);
+void			eb_close(void);
 
 #endif
