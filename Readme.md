@@ -16,12 +16,12 @@ usage: ft_select choix1 etc.
 $> ls `./ft_select src/*.c`
 ```
 
-## Subject
+## Sujet
 
 * Ecrire un programme `ft_select` qui prend en paramètre une série d’arguments.\
 La liste d’arguments s’affiche.
 
-* L’utilisateur peut alors se déplacer dans la liste des arguments à l’aide des flèches (<kbd>↑up</kbd> et <kbd>↓down</kbd>) (la liste est circulaire).
+* L’utilisateur peut alors se déplacer dans la liste des arguments à l’aide des flèches (<kbd>↑ up</kbd> et <kbd>↓ down</kbd>) (la liste est circulaire).
 
 * Un ou plusieurs choix peuvent être sélectionnés ou désélectionnés à l’aide de la touche <kbd>espace</kbd>. A chaque sélection effectuée, le curseur doit automatiquement se positionner sur l’élément suivant.
 
@@ -45,7 +45,7 @@ nouveau assez grande, le programme doit fonctionner de nouveau normalement.
 
 * Si l’utilisateur appuie sur la touche <kbd>echap</kbd>, le programme ne doit rien renvoyer au shell et terminer normalement.
 
-* Si l’utilisateur appuie sur la touche <kbd>⌫delete</kbd> ou <kbd>⌦backspace</kbd>, l’élément sur lequel
+* Si l’utilisateur appuie sur la touche <kbd>⌫ delete</kbd> ou <kbd>⌦ backspace</kbd>, l’élément sur lequel
 pointe le curseur doit être effacé de la liste. S’il n’y a plus d’élément dans la liste,
 le comportement est le même que si l’utilisateur avait appuyé sur la touche <kbd>echap</kbd>.
 
@@ -65,5 +65,19 @@ un signal (sauf signaux qu’on ne peut pas intercepter, mais ca veut dire que v
 
 * Si le programme est lancé avec un environnement vide, vous devez adopter un
 comportement raisonnable.
+
+## Fonctions autorisées
+
+* `isatty`, `ttyname`, `ttyslot`
+* `ioctl`
+* `getenv`
+* `tcsetattr`, `tcgetattr`
+* `tgetent`, `tgetflag`, `tgetnum`, `tgetstr`, `tgoto`, `tputs`
+* `open`, `close`, `write`
+* `malloc`, `free`
+* `read`, `exit`
+* `signal`
+
+----
 
 [Sujet complet](subject/fr.subject.pdf).
